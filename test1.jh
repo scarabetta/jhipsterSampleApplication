@@ -1,0 +1,59 @@
+entity Aplicacion {
+	nombre String
+    descripcion String
+}
+
+entity Organizacion {
+	denominacion String
+    tipoOrganizacion String
+}
+
+entity Componente {
+	tipoComponente String
+    descripcion String
+}
+entity Version {
+	denominacion String
+}
+
+entity Plataforma {
+	denominacion String
+    descripcion String
+}
+
+entity Sistema {
+	denominacion String
+    descripcion String
+}
+
+relationship OneToMany {
+	Aplicacion{componentes} to Componente{aplicacion}
+}
+
+relationship ManyToOne {
+	Sistema{aplicaciones} to Aplicacion{sistema}
+}
+
+relationship ManyToOne {
+	Aplicacion{solicitante} to Organizacion,
+	Aplicacion{responsable} to Organizacion,
+    Aplicacion{desarrollador} to Organizacion
+}
+
+relationship OneToMany {
+	Version to Componente{utiliza}
+}
+
+relationship OneToMany {
+	Plataforma to Version
+}
+
+// Set pagination options
+paginate all with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix
